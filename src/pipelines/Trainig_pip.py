@@ -6,7 +6,8 @@ from src.components.Data_ingestion import DataIngestionConfig
 from src.components.Data_ingestion import DataIngestion 
 from src.components.Data_transformation import DataTransformationCofig  
 from src.components.Data_transformation import DataTransformation  
-
+from src.components.Model_trainer  import ModelTrainerConfig  
+from src.components.Model_trainer  import ModelTrainer  
 
 class Trainig_pipeline :
     try :
@@ -19,7 +20,11 @@ class Trainig_pipeline :
         data_transformer = DataTransformation()
         train_arr,test_arr = data_transformer.Transformer(train_path,test_path) 
         logging.info('data transformation successful')  
-        print('data transformation successful') 
+        logging.info('model trainer started') 
+        model_trainer = ModelTrainer() 
+        report = model_trainer.Trainer(train_arr,test_arr) 
+        logging.info('model training is completed') 
+        print(report)
 
     except Exception as e :
         logging.error(e)

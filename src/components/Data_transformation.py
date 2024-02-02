@@ -2,6 +2,7 @@ import os
 import sys 
 import pandas as pd 
 import numpy as np 
+from utils import save_model 
 from src.Logger import logging
 from src.Exception import CustomException 
 from sklearn.pipeline import Pipeline 
@@ -49,6 +50,9 @@ class DataTransformation:
             preprocessor = self.get_processor() 
             logging.info('Preprocessor obtained successfully')
             train_input_arr = preprocessor.fit_transform(train_input_features)
+            logging.info('save preprocessor object start ')
+            save_model(self.processor_config.processor_file_path,preprocessor) 
+            logging.info('save preprocessor object completed') 
             train_arr = np.c_[np.array(train_input_arr),np.array(train_target_features)]
             logging.info('Training data is tranformation successful')
             test_df = pd.read_csv(test_path) 
